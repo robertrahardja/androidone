@@ -50,6 +50,14 @@ fun AdoneTheme(
         else -> LightColorScheme
     }
 
+    // Apply edge-to-edge display on Android 12+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val activity = LocalContext.current as? Activity
+        activity?.let {
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(it.window, false)
+        }
+    }
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,

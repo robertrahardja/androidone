@@ -1,0 +1,95 @@
+package com.rr.adone
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val context = LocalContext.current
+            var clickCount by remember { mutableStateOf(0) }
+            
+            MaterialTheme {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .background(Color.White),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        text = "AndroidOne Test App",
+                        fontSize = 24.sp,
+                        color = Color.Black
+                    )
+                    
+                    Text(
+                        text = "Click count: $clickCount",
+                        fontSize = 18.sp,
+                        color = Color.Blue
+                    )
+                    
+                    Button(
+                        onClick = { 
+                            clickCount++
+                            Toast.makeText(context, "Button clicked! Count: $clickCount", Toast.LENGTH_SHORT).show()
+                        }
+                    ) {
+                        Text("Click Me - Count: $clickCount")
+                    }
+                    
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                clickCount += 10
+                                Toast.makeText(context, "Card clicked! Added 10. Count: $clickCount", Toast.LENGTH_SHORT).show()
+                            }
+                            .background(Color.LightGray)
+                    ) {
+                        Text(
+                            text = "Clickable Card - Adds 10 to count",
+                            modifier = Modifier.padding(16.dp),
+                            fontSize = 16.sp
+                        )
+                    }
+                    
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.Red)
+                            .clickable {
+                                clickCount = 0
+                                Toast.makeText(context, "Red box clicked! Reset count to 0", Toast.LENGTH_SHORT).show()
+                            }
+                    ) {
+                        Text(
+                            text = "Reset",
+                            color = Color.White,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                    
+                    Text(
+                        text = if (clickCount > 0) "✅ Clicks are working!" else "❌ Try clicking something",
+                        fontSize = 16.sp,
+                        color = if (clickCount > 0) Color.Green else Color.Red
+                    )
+                }
+            }
+        }
+    }
+}
