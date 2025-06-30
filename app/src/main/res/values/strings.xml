@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">adone</string>
+    <string name="title_activity_content_card">ContentCard</string>
 </resources>
